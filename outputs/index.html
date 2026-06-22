@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTP Nexus BF - Centre de gestion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3zM9 3v15M15 6v15"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7h18v14H3z"/><path d="M16 11h5v6h-5a3 3 0 0 1 0-6z"/><path d="M3 7l13-5 3 5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><path d="M4.9 19.1A10 10 0 0 1 4.9 4.9M7.8 16.2a6 6 0 0 1 0-8.5M10.6 13.4a2 2 0 1 1 2.8 0M16.2 16.2a6 6 0 0 0 0-8.5M19.1 19.1a10 10 0 0 0 0-14.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18M7 12h10M10 19h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h8l-1 8 11-14h-8z"/></symbol>
+  </svg>
+
+  <canvas id="skylineCanvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navigation principale">
+      <a class="brand" href="#dashboard" aria-label="BTP Nexus BF">
+        <span class="brand-mark">BN</span>
+        <span>
+          <strong>BTP Nexus BF</strong>
+          <small>Gestion terrain + siège</small>
+        </span>
+      </a>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="dashboard" aria-label="Tableau de bord"><svg><use href="#i-grid"></use></svg><span>Tableau</span></button>
+        <button class="nav-item" data-view="chantiers" aria-label="Chantiers"><svg><use href="#i-map"></use></svg><span>Chantiers</span></button>
+        <button class="nav-item" data-view="stocks" aria-label="Approvisionnements"><svg><use href="#i-box"></use></svg><span>Stocks</span></button>
+        <button class="nav-item" data-view="equipes" aria-label="Équipes"><svg><use href="#i-users"></use></svg><span>Équipes</span></button>
+        <button class="nav-item" data-view="finances" aria-label="Finances"><svg><use href="#i-wallet"></use></svg><span>Finances</span></button>
+        <button class="nav-item" data-view="risques" aria-label="Risques"><svg><use href="#i-shield"></use></svg><span>Risques</span></button>
+        <button class="nav-item" data-view="documents" aria-label="Documents"><svg><use href="#i-file"></use></svg><span>Docs</span></button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <button class="icon-button" id="quickOpen" aria-label="Actions rapides" title="Actions rapides"><svg><use href="#i-zap"></use></svg></button>
+        <button class="icon-button" id="syncButton" aria-label="Synchroniser le terrain" title="Synchroniser le terrain"><svg><use href="#i-radio"></use></svg></button>
+        <button class="icon-button" id="themeButton" aria-label="Changer le thème" title="Changer le thème"><svg><use href="#i-sun"></use></svg></button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Centre de commandement BTP</p>
+          <h1 id="viewTitle">Pilotage opérationnel</h1>
+        </div>
+        <div class="topbar-tools">
+          <label class="search-box" aria-label="Rechercher">
+            <svg><use href="#i-filter"></use></svg>
+            <input id="globalSearch" type="search" placeholder="Chantier, chef, matériau...">
+          </label>
+          <select id="baseSelect" aria-label="Base opérationnelle">
+            <option value="Ouagadougou">Base Ouagadougou</option>
+            <option value="Bobo-Dioulasso">Base Bobo-Dioulasso</option>
+            <option value="Koudougou">Base Koudougou</option>
+            <option value="Ouahigouya">Base Ouahigouya</option>
+          </select>
+        </div>
+      </header>
+
+      <section class="status-strip" aria-label="État opérationnel">
+        <div><span>Horloge terrain</span><strong id="liveClock">--:--</strong></div>
+        <div><span>Mode réseau</span><strong id="networkMode">Synchronisé</strong></div>
+        <div><span>Devise</span><strong>XOF / FCFA</strong></div>
+        <div><span>Saison</span><strong id="seasonLabel">Surveillance pluie</strong></div>
+      </section>
+
+      <section class="view active" id="dashboard" aria-labelledby="dashboard-title">
+        <div class="dashboard-grid">
+          <article class="command-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Territoire</p>
+                <h2 id="dashboard-title">Carte active Burkina Faso</h2>
+              </div>
+              <button class="ghost-button" id="scanButton"><svg><use href="#i-radio"></use></svg> Scanner</button>
+            </div>
+
+            <div class="map-layout">
+              <div class="bf-map" role="img" aria-label="Carte stylisée des chantiers au Burkina Faso">
+                <svg viewBox="0 0 580 420">
+                  <path class="map-shape" d="M126 78 236 54 312 73 389 48 475 93 536 174 506 260 460 332 344 361 235 342 143 363 74 291 49 193z"/>
+                  <path class="route" d="M132 271 C210 250 225 190 292 181 C356 172 391 214 465 155"/>
+                  <path class="route route-2" d="M160 115 C217 154 260 218 335 235 C390 247 433 295 467 331"/>
+                  <g class="hotspots">
+                    <button class="map-pin active" data-project="0" aria-label="Ouagadougou"><circle cx="286" cy="206" r="13"/><text x="302" y="203">Ouaga</text></button>
+                    <button class="map-pin" data-project="1" aria-label="Bobo-Dioulasso"><circle cx="139" cy="276" r="13"/><text x="154" y="280">Bobo</text></button>
+                    <button class="map-pin" data-project="2" aria-label="Koudougou"><circle cx="218" cy="220" r="11"/><text x="232" y="224">KDG</text></button>
+                    <button class="map-pin" data-project="3" aria-label="Kaya"><circle cx="342" cy="138" r="11"/><text x="356" y="142">Kaya</text></button>
+                    <button class="map-pin" data-project="4" aria-label="Banfora"><circle cx="96" cy="335" r="11"/><text x="111" y="339">Banfora</text></button>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="site-brief" id="selectedBrief" aria-live="polite"></div>
+            </div>
+          </article>
+
+          <div class="kpi-grid" id="kpiGrid"></div>
+
+          <article class="tool-panel scenario-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Simulation</p>
+                <h2>Impact chantier</h2>
+              </div>
+              <span class="pulse-dot"></span>
+            </div>
+            <label class="range-row">
+              <span>Pluie / accès piste</span>
+              <input id="rainRange" type="range" min="0" max="100" value="42">
+            </label>
+            <label class="range-row">
+              <span>Prix carburant</span>
+              <input id="fuelRange" type="range" min="0" max="100" value="35">
+            </label>
+            <label class="range-row">
+              <span>Retard paiement client</span>
+              <input id="paymentRange" type="range" min="0" max="100" value="28">
+            </label>
+            <div class="scenario-output" id="scenarioOutput"></div>
+          </article>
+
+          <article class="tool-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Live</p>
+                <h2>Journal terrain</h2>
+              </div>
+              <button class="icon-button" id="exportLog" aria-label="Télécharger le journal" title="Télécharger le journal"><svg><use href="#i-download"></use></svg></button>
+            </div>
+            <div class="activity-feed" id="activityFeed"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="chantiers" aria-labelledby="chantiers-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">Production</p>
+            <h2 id="chantiers-title">Chantiers et tâches</h2>
+          </div>
+          <div class="segmented" role="group" aria-label="Filtrer les chantiers">
+            <button class="segment active" data-filter="all">Tous</button>
+            <button class="segment" data-filter="urgent">Urgents</button>
+            <button class="segment" data-filter="public">Marchés publics</button>
+            <button class="segment" data-filter="private">Privés</button>
+          </div>
+        </div>
+
+        <div class="projects-layout">
+          <div class="project-grid" id="projectGrid"></div>
+          <aside class="tool-panel detail-panel" id="projectDetail" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="view" id="stocks" aria-labelledby="stocks-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">Approvisionnement</p>
+            <h2 id="stocks-title">Stocks, fournisseurs et transport</h2>
+          </div>
+          <label class="range-inline">Délai route
+            <input id="routeDelay" type="range" min="0" max="5" value="1">
+          </label>
+        </div>
+        <div class="stock-layout">
+          <div class="stock-table" id="stockTable"></div>
+          <article class="tool-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Achat</p>
+                <h2>Bon rapide</h2>
+              </div>
+            </div>
+            <div class="purchase-card" id="purchaseCard"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="equipes" aria-labelledby="equipes-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">Ressources humaines</p>
+            <h2 id="equipes-title">Équipes, présence et sécurité</h2>
+          </div>
+          <button class="ghost-button" id="briefingButton"><svg><use href="#i-bell"></use></svg> Briefing SMS</button>
+        </div>
+        <div class="teams-layout">
+          <div class="crew-board" id="crewBoard"></div>
+          <article class="tool-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Affectation</p>
+                <h2>Planifier une brigade</h2>
+              </div>
+            </div>
+            <form class="assignment-form" id="assignmentForm">
+              <label>Équipe<select id="crewSelect"></select></label>
+              <label>Chantier<select id="projectSelect"></select></label>
+              <label>Quart<select id="shiftSelect"><option>Jour</option><option>Nuit</option><option>Urgence pluie</option></select></label>
+              <button class="primary-button" type="submit"><svg><use href="#i-check"></use></svg> Affecter</button>
+            </form>
+            <div class="skill-matrix" id="skillMatrix"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="finances" aria-labelledby="finances-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">Gestion</p>
+            <h2 id="finances-title">Devis, trésorerie et paiements</h2>
+          </div>
+          <button class="ghost-button" id="generateInvoice"><svg><use href="#i-file"></use></svg> Proforma</button>
+        </div>
+        <div class="finance-layout">
+          <article class="tool-panel finance-form">
+            <label>Montant HT (FCFA)<input id="amountInput" type="number" value="18500000" min="0"></label>
+            <label>TVA paramétrable (%)<input id="taxInput" type="number" value="18" min="0" max="30"></label>
+            <label>Retenue garantie (%)<input id="retainInput" type="number" value="5" min="0" max="20"></label>
+            <label>Avance reçue (FCFA)<input id="advanceInput" type="number" value="4200000" min="0"></label>
+            <div class="payment-mode" role="group" aria-label="Mode de paiement">
+              <button class="segment active" type="button" data-pay="Virement">Virement</button>
+              <button class="segment" type="button" data-pay="Mobile Money">Mobile Money</button>
+              <button class="segment" type="button" data-pay="Espèces">Espèces</button>
+            </div>
+          </article>
+          <article class="tool-panel finance-output" id="financeOutput"></article>
+          <article class="tool-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Prévision</p>
+                <h2>Cash-flow 6 mois</h2>
+              </div>
+            </div>
+            <div class="cash-chart" id="cashChart"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="risques" aria-labelledby="risques-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">HSE & contexte</p>
+            <h2 id="risques-title">Risques locaux et plans d’action</h2>
+          </div>
+          <button class="ghost-button" id="sendAlert"><svg><use href="#i-bell"></use></svg> Alerter les chefs</button>
+        </div>
+        <div class="risk-grid" id="riskGrid"></div>
+        <article class="tool-panel alert-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Diffusion</p>
+              <h2>Canaux d’alerte</h2>
+            </div>
+          </div>
+          <label class="toggle"><input type="checkbox" checked> SMS chefs chantier</label>
+          <label class="toggle"><input type="checkbox" checked> WhatsApp logistique</label>
+          <label class="toggle"><input type="checkbox"> Radio base-vie</label>
+          <label class="toggle"><input type="checkbox" checked> Note sécurité en français + mooré</label>
+        </article>
+      </section>
+
+      <section class="view" id="documents" aria-labelledby="documents-title">
+        <div class="section-heading wide">
+          <div>
+            <p class="eyebrow">Administratif</p>
+            <h2 id="documents-title">Documents terrain</h2>
+          </div>
+          <button class="ghost-button" id="downloadDoc"><svg><use href="#i-download"></use></svg> Export TXT</button>
+        </div>
+        <div class="documents-layout">
+          <div class="template-list" id="templateList"></div>
+          <article class="tool-panel document-preview">
+            <textarea id="docPreview" aria-label="Aperçu du document"></textarea>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="quick-dialog" id="quickDialog" aria-labelledby="quickTitle">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Actions rapides</p>
+        <h2 id="quickTitle">Commandes terrain</h2>
+      </div>
+      <button class="icon-button" id="quickClose" aria-label="Fermer" title="Fermer">×</button>
+    </div>
+    <div class="quick-grid">
+      <button data-action="pointage"><svg><use href="#i-users"></use></svg><span>Pointage équipe</span></button>
+      <button data-action="stock"><svg><use href="#i-box"></use></svg><span>Demande ciment</span></button>
+      <button data-action="incident"><svg><use href="#i-shield"></use></svg><span>Incident HSE</span></button>
+      <button data-action="paiement"><svg><use href="#i-wallet"></use></svg><span>Relance paiement</span></button>
+    </div>
+  </dialog>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
